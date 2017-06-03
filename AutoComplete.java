@@ -10,9 +10,9 @@ public class Autocomplete {
 	public ArrayList<Term> _words;
 
     // Initializes the data structure from the given array of terms.
-    public Autocomplete(Term[] terms){
+    public Autocomplete(ArrayList<Term> words){
     	_results = new PriorityQueue<Term>();
-    	_words = new ArrayList<Term>();
+    	_words = words;
     }
     
     // Sort all words in file (_words)
