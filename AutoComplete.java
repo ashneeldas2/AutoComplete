@@ -23,21 +23,18 @@ public class Autocomplete {
     }
 
     // Returns all terms that start with the given prefix, in descending order of weight.
-    public PriorityQueue<Term> allMatches(String prefix){
+    public PriorityQueue<Term> allMatches(){
 	    
     }
 
 	
-    public int getFirstOccur(String prefix){
+    public int getFirstOccur(){
 	    
     }
  
-    public int getLastOccur(String prefix){
+    public int getLastOccur(){
 	    
     }
-
-    // Returns the number of terms that start with the given prefix.
-    public int numberOfMatches(String prefix)
 
     // unit testing (required)
     public static void main(String[] args)   
