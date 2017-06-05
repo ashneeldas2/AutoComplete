@@ -1,41 +1,76 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
-public class Autocomplete {
+public class AutoComplete {
 
 	//1) Put all words in text file into _words
 	//2) Sort _words
 	//3) Search _words using binary search for matching results. 
 	//4) Put the found words into the priority queue. 
+	private Term [] _words;
+	private String _phrase;
 	private PriorityQueue<Term> _results;
-	private ArrayList<Term> _words;
-	private String _phrase; 
-
 	// Initializes the data structure from the given array of terms.
-    public Autocomplete(ArrayList<Term> words, String phrase){
-    	_results = new PriorityQueue<Term>();
+    public AutoComplete(Term [] words, String phrase){
     	_words = words;
-		_phrase = phrase;
+//	_results = allMatches(phrase);
+	_phrase = phrase;
+	quickSort(0, _words.length-1);
+	for (int i = 0; i < _words.length; i++) System.out.println(_words[i]);
     }
     
     // Sort all words in file (_words)
-    public void sortFile(){
-		
+    public void quickSort(int low, int high){
+	if (_words == null || _words.length == 0) return;
+	int i = low, j = high;
+	Term pivot = _words[low + (high - low)/2];
+	while (i <= j) {
+	    while (_words[i].compareTo(pivot) < 0) i++;
+	    while (_words[j].compareTo(pivot) > 0) j--;
+	    if (i <= j) {
+	        exchange(i, j);	
+		i++;
+		j--;
+	    }
+	}	
+	if (low < j) quickSort(low, j); 
+	if (i < high) quickSort(i, high);
+    }
+
+    private void exchange(int i, int j) {
+	Term temp = _words[i];
+	_words[i] = _words[j];
+	_words[j] = temp;
     }
 
     // Returns all terms that start with the given prefix, in descending order of weight.
-    public PriorityQueue<Term> allMatches(){
-	    
+    public PriorityQueue<Term> allMatches(String prefix){
+	Comparator<Term> byRev = Term.byReverseWeightOrder();	
+	PriorityQueue<Term> q = new PriorityQueue<Term>(byRev);
+	int firstMatch = getFirstOccur(prefix);
+	int lastMatch = getLastOccur(prefix);	
+	while (firstMatch <= lastMatch) {
+	    q.add(_words[firstMatch]);	
+	    firstMatch++;
+	}
+	return q;
     }
 
 	
-    public int getFirstOccur(){
-	    
+    public int getFirstOccur(String key){
+	return 5;	    
     }
  
-    public int getLastOccur(){
-	    
+    public int getLastOccur(String key){
+	return 5;
     }
 
     // unit testing (required)
-    public static void main(String[] args)   
+    public static void main(String[] args) {
+	Term t1 = new Term("hello", 5);
+	Term t2 = new Term("goodbye", 10);
+	Term t3 = new Term("yes", 17);
+	Term t4 = new Term("no", 18);
+	Term [] terms = {t1, t2, t3, t4};
+	AutoComplete ac = new AutoComplete(terms, "hi");		
+    }  
 }
