@@ -9,7 +9,7 @@ public class QueryComparator<T> implements Comparator<T>{
    }
 
    public int compare(T a, T b) throws ClassCastException{
-       return (((Term) b).getQuery().substring(0, _r).compareTo(((Term) a).getQuery().substring(0, _r)));
+       return ((String) a).substring(0, _r).compareTo(((String) b).substring(0, _r));
     }
 
 }
