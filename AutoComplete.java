@@ -16,7 +16,7 @@ public class AutoComplete {
 	_phrase = phrase;
 	quickSort(0, _words.length-1);
 	for (int i = 0; i < _words.length; i++) System.out.println(_words[i]);
-	System.out.println(getFirstOccur(_phrase));
+	System.out.println(getLastOccur(_phrase));
     }
     
     // Sort all words in file (_words)
@@ -77,14 +77,29 @@ public class AutoComplete {
     }
  
     public int getLastOccur(String key){
-	return 5;
+    	Comparator<String> queryC = new QueryComparator<String>(_phrase.length());
+    	int lo = 0; 
+    	int hi = _words.length - 1;
+    	int recent = -1;
+    	while (lo <= hi) {
+    		int mid = lo + (hi-lo)/2;
+    		if (queryC.compare(key, _words[mid].getQuery()) == 0) {
+    			recent = mid;
+    			lo = mid + 1;
+    		}
+    		else if (queryC.compare(key, _words[mid].getQuery()) < 0)
+    			hi = mid - 1;
+    		else
+    			lo = mid + 1;
+    	}
+    	return recent;
     }
 
     // unit testing (required)
     public static void main(String[] args) {
 	Term t1 = new Term("hello", 5);
 	Term t15 = new Term("hell", 6);
-	Term t16 = new Term("happy", 17);
+	Term t16 = new Term("hellenistic", 17);
 	Term t2 = new Term("goodbye", 10);
 	Term t3 = new Term("yes", 17);
 	Term t4 = new Term("no", 18);
