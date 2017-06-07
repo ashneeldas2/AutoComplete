@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class AutoComplete {
 
@@ -12,14 +13,19 @@ public class AutoComplete {
 	// Initializes the data structure from the given array of terms.
     public AutoComplete(Term [] words, String phrase){
     	_words = words;
-//	_results = allMatches(phrase);
-	_phrase = phrase;
-	quickSort(0, _words.length-1);
-	for (int i = 0; i < _words.length; i++) System.out.println(_words[i]);
-	System.out.println(getLastOccur(_phrase));
+    	_phrase = phrase;
+    	quickSort(0, _words.length-1);
+		_results = allMatches(_phrase);
     }
     
     // Sort all words in file (_words)
+    
+    public PriorityQueue<Term> getResults() {
+    	return _results;
+    }
+    public static void printArray(Term [] terms) {
+    	for (int i = 0; i < terms.length; i++) System.out.println(terms[i].getQuery() + ", ");
+    }
     public void quickSort(int low, int high){
 	if (_words == null || _words.length == 0) return;
 	int i = low, j = high;
@@ -29,8 +35,8 @@ public class AutoComplete {
 	    while (_words[j].compareTo(pivot) > 0) j--;
 	    if (i <= j) {
 	        exchange(i, j);	
-		i++;
-		j--;
+	        i++;
+	        j--;
 	    }
 	}	
 	if (low < j) quickSort(low, j); 
@@ -45,10 +51,14 @@ public class AutoComplete {
 
     // Returns all terms that start with the given prefix, in descending order of weight.
     public PriorityQueue<Term> allMatches(String prefix){
-	Comparator<Term> byRev = Term.byReverseWeightOrder();	
+	Comparator<Term> byRev = new ReverseWeightComparator();
 	PriorityQueue<Term> q = new PriorityQueue<Term>(byRev);
 	int firstMatch = getFirstOccur(prefix);
 	int lastMatch = getLastOccur(prefix);	
+	if (firstMatch == -1 || lastMatch == -1) {
+		System.out.println("No matches!");
+		return q;
+	}
 	while (firstMatch <= lastMatch) {
 	    q.add(_words[firstMatch]);	
 	    firstMatch++;
@@ -84,8 +94,8 @@ public class AutoComplete {
     	while (lo <= hi) {
     		int mid = lo + (hi-lo)/2;
     		if (queryC.compare(key, _words[mid].getQuery()) == 0) {
-    			recent = mid;
     			lo = mid + 1;
+    			recent = mid;
     		}
     		else if (queryC.compare(key, _words[mid].getQuery()) < 0)
     			hi = mid - 1;
@@ -97,13 +107,30 @@ public class AutoComplete {
 
     // unit testing (required)
     public static void main(String[] args) {
-	Term t1 = new Term("hello", 5);
-	Term t15 = new Term("hell", 6);
-	Term t16 = new Term("hellenistic", 17);
-	Term t2 = new Term("goodbye", 10);
-	Term t3 = new Term("yes", 17);
-	Term t4 = new Term("no", 18);
-	Term [] terms = {t1, t15, t16, t2, t3, t4};
-	AutoComplete ac = new AutoComplete(terms, "hell");		
-    }  
+    String filename = args[0];
+    In in = new In(filename);
+    int N = in.readInt();
+    Term[] terms = new Term[N];
+    for (int i = 0; i < N; i++) {
+        long weight = in.readLong();           // read the next weight
+        in.readChar();                         // scan past the tab
+        String query = in.readLine();          // read the next query
+        terms[i] = new Term(query, weight);    // construct the term
+    }
+    int numTerms = Integer.parseInt(args[1]);
+	Scanner sc = new Scanner(System.in);
+	System.out.print("Enter a term!: ");
+	while (sc.hasNext()) {
+		int counter = 0;
+		String input = sc.nextLine().toLowerCase();
+		AutoComplete ac = new AutoComplete(terms, input);	
+		while (!ac.getResults().isEmpty() && counter < numTerms) {
+			counter++;
+			System.out.println(ac.getResults().poll());
+		}
+		System.out.print("Enter a term!: ");
+	}
+    }
+	
 }
+
