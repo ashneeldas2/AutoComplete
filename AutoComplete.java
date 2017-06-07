@@ -115,7 +115,7 @@ public class AutoComplete {
         long weight = in.readLong();           // read the next weight
         in.readChar();                         // scan past the tab
         String query = in.readLine();          // read the next query
-        terms[i] = new Term(query, weight);    // construct the term
+        terms[i] = new Term(query.toLowerCase(), weight);    // construct the term
     }
     int numTerms = Integer.parseInt(args[1]);
 	Scanner sc = new Scanner(System.in);

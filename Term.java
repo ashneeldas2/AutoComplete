@@ -6,11 +6,13 @@ public class Term implements Comparable<Term> {
 	private long _weight;
 
     // Initializes a term with the given query string and weight.
+	// Constructor
     public Term(String query, long weight){
     	_query = query;
     	_weight = weight;
     }
     
+    // Accessor methods
     public String getQuery(){
     	return _query;
     }
@@ -30,6 +32,7 @@ public class Term implements Comparable<Term> {
     }
 
     // Compares the two terms in lexicographic order by query.
+
     public int compareTo(Term that){
     	return this.getQuery().compareTo(that.getQuery());
     }
@@ -37,19 +40,7 @@ public class Term implements Comparable<Term> {
     // Returns a string representation of this term in the following format:
     // the weight, followed by a tab, followed by the query.
     public String toString(){
-    	return "Query: " + getQuery() + " Weight: " + getWeight();
-    }
-    
-    public static void main(String[] args){
-    	Term term = new Term("hello", 100);
-    	Term term2 = new Term("goodbye", 500);
-    	Term term3 = new Term("hey", 200);
-    	System.out.println(term);
-    	System.out.println(term.compareTo(term2));
-    	Comparator<Term> byRev = Term.byReverseWeightOrder();
-    	System.out.println(byRev.compare(term2, term));
-    	Comparator<Term> byPre = Term.byPrefixOrder(3);
-    	System.out.println(byPre.compare(term3, term));
+    	return getQuery() + "     " + getWeight();
     }
 
 }
