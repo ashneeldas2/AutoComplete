@@ -1,5 +1,6 @@
 import java.util.Comparator;
 
+//This class compares Terms based on their weights, in reverse. 
 public class ReverseWeightComparator<T> implements Comparator<T>{
 
    public int compare(T a, T b) throws ClassCastException{

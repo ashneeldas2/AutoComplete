@@ -38,7 +38,7 @@ public class Term implements Comparable<Term> {
     }
 
     // Returns a string representation of this term in the following format:
-    // the weight, followed by a tab, followed by the query.
+    // the query, followed by spaces, followed by the weight. 
     public String toString(){
     	return getQuery() + "     " + getWeight();
     }

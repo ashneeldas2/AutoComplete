@@ -7,10 +7,13 @@ public class AutoComplete {
 	//2) Sort _words
 	//3) Search _words using binary search for matching results. 
 	//4) Put the found words into the priority queue. 
+	
 	private Term [] _words;
 	private String _phrase;
 	private PriorityQueue<Term> _results;
+	
 	// Initializes the data structure from the given array of terms.
+	// constructor
     public AutoComplete(Term [] words, String phrase){
     	_words = words;
     	_phrase = phrase;
@@ -26,6 +29,7 @@ public class AutoComplete {
     public static void printArray(Term [] terms) {
     	for (int i = 0; i < terms.length; i++) System.out.println(terms[i].getQuery() + ", ");
     }
+    // Sorting algorithm: O(NlogN)
     public void quickSort(int low, int high){
 	if (_words == null || _words.length == 0) return;
 	int i = low, j = high;
@@ -43,6 +47,7 @@ public class AutoComplete {
 	if (i < high) quickSort(i, high);
     }
 
+    // Switch two terms in an array at indexes i and j. 
     private void exchange(int i, int j) {
 	Term temp = _words[i];
 	_words[i] = _words[j];
@@ -66,7 +71,7 @@ public class AutoComplete {
 	return q;
     }
 
-	
+	// Binary search to return the index of the first occurrence of a given string. 
     public int getFirstOccur(String key){
     	Comparator<String> queryC = new QueryComparator<String>(_phrase.length());
     	int lo = 0; 
@@ -86,6 +91,7 @@ public class AutoComplete {
     	return recent;
     }
  
+ // Binary search to return the index of the last occurrence of a given string. 
     public int getLastOccur(String key){
     	Comparator<String> queryC = new QueryComparator<String>(_phrase.length());
     	int lo = 0; 
@@ -105,7 +111,7 @@ public class AutoComplete {
     	return recent;
     }
 
-    // unit testing (required)
+    // Gets user input to construct a new AutoComplete object.
     public static void main(String[] args) {
     String filename = args[0];
     In in = new In(filename);

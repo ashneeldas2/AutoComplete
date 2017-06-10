@@ -1,5 +1,6 @@
 import java.util.Comparator;
 
+// This class compares Terms based on their queries. 
 public class QueryComparator<T> implements Comparator<T>{
 
    private int _r;
