@@ -12,4 +12,7 @@ II. How Does It Work?
   
 III. How Do You Run AutoComplete?
 
-  "java AutoComplete <filename> <number of results to display>"
+  "java AutoComplete (filename) (number of results to display)"
+  
+  Ex:
+      "java AutoComplete wikiText.txt 5"
