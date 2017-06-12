@@ -1,6 +1,6 @@
 I. What Is AutoComplete?
 
-AutoComplete is a program that mimicks the autocomplete feature of search engines such as Google. It takes a phrase from the user and then searches a database for words that begin with that phrase. Each word in the database has an assigned weight and when the found words are returned by the program, they are returned in decending order by weight.
+AutoComplete is a program that mimics the autocomplete feature of search engines such as Google. It takes a phrase from the user and then searches a database for words that begin with that phrase. Each word in the database has an assigned weight and when the found words are returned by the program, they are returned in decending order by weight.
   
 II. How Does It Work?
 
