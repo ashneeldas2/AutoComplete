@@ -9,4 +9,4 @@ II. How Does It Work?
   5) The results are displayed to the user.
   
 III. How Do You Run AutoComplete?
-  "java 
+  "java AutoComplete <filename> <number of results to display>"
