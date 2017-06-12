@@ -18,7 +18,7 @@ public class AutoComplete {
     	_words = words;
     	_phrase = phrase;
     	quickSort(0, _words.length-1);
-		_results = allMatches(_phrase);
+	_results = allMatches(_phrase);
     }
     
     // Sort all words in file (_words)
